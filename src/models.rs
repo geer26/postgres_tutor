@@ -42,11 +42,10 @@ impl User {
         living_password.as_bytes() == try_password
     }
 
-    pub fn new(&mut self, username: String, password: String) -> User{
+    pub fn new(&mut self, username: String, password: String){
         self.id = 0;
         self.username = username;
-        self.password_hash = "".to_string();
-        self.salt = "".to_string();
+        self.set_password(password);
         self.active = true;
     }
 

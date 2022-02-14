@@ -27,5 +27,6 @@ fn main() {
     println!("Hello, world!");
     let _conn: PgConnection = establish_connection();
     println!("{:?}",&_conn.type_id());
-    let gergo = User::new("Gergo".to_string(), "password".to_string());
+
+    let gergo = User::new(User, "Gergo".to_string(), "password".to_string());
 }
