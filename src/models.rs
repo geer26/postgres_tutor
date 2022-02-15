@@ -4,7 +4,7 @@ use rand::{distributions::Alphanumeric, Rng};
 #[derive(Queryable)]
 
 pub struct User {
-    id: i32,
+    id: u32,
     username: String,
     password_hash: String,
     salt: String,
@@ -30,6 +30,7 @@ impl User {
         let salt = s.as_bytes();
         let config = Config::default();
         self.password_hash = argon2::hash_encoded(password, salt, &config).unwrap();
+        //argon2::hash_encoded(password, salt, &config).unwrap()
     }
 
     pub fn check_password(&self, password: String) -> bool{
@@ -39,14 +40,17 @@ impl User {
         let try_password = password.as_bytes();
         let config = Config::default();
         let try_password_hash = argon2::hash_encoded(try_password, salt, &config).unwrap();
-        living_password.as_bytes() == try_password
+        living_password == &try_password_hash
     }
 
-    pub fn new(&mut self, username: String, password: String){
-        self.id = 0;
-        self.username = username;
-        self.set_password(password);
-        self.active = true;
+    pub fn new(username: String) -> Self{
+        User{
+            id: 0,
+            password_hash: "".to_string(),
+            salt: "".to_string(),
+            username,
+            active: true,
+        }
     }
 
 }

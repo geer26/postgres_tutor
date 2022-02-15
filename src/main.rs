@@ -24,9 +24,14 @@ pub fn establish_connection() -> PgConnection {
 
 
 fn main() {
-    println!("Hello, world!");
-    let _conn: PgConnection = establish_connection();
-    println!("{:?}",&_conn.type_id());
+    //println!("Hello, world!");
+    //let _conn: PgConnection = establish_connection();
+    //println!("{:?}",&_conn.type_id());
 
-    let gergo = User::new(User, "Gergo".to_string(), "password".to_string());
+    let mut gergo = User::new("Gergo".to_string());
+    gergo.set_password("123456aA".to_string());
+
+    println!("PASSWORD CHECK: {}", gergo.check_password("123456aA".to_string()));
+    //println!("PW HASH:{}", &gergo.password_hash);
+    //println!("SALT: {}", &gergo.salt)
 }
